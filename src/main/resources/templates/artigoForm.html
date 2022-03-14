@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Artigo Form</title>
+		
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+
+	</head>
+	<body>
+		
+		<div class="container" style="margin-top: 20px; width: 25%; position: fixed; margin-left: 64px;">
+		
+			<h3 class="title">Artigo</h3>
+			<hr/>
+			
+			<form th:action="@{/artigos/salvarArtigo}" th:object="${artigo}" method="POST">
+
+        <div class="field">
+            <label class="label">Titulo</label>
+            <div class="control">
+              <input th:field="*{titulo}" class="input" type="text" placeholder="Informe o Titulo">
+            </div>
+        </div>
+                
+        <div class="field">
+            <label class="label">Resumo</label>
+            <div class="control" >
+              <input th:field="*{resumo}" class="input" type="text" placeholder="Informe o Resumo" />
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" th:field="*{publicado}">
+                Publicado
+              </label>
+            </div>
+        </div>
+
+
+        <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" type="submit" >Salvar</button>
+            </div>
+            <div class="control">
+              <a class="button is-link" style="background-color: #eff1fa; color: #3850b7;" th:href="@{/artigos}">Voltar</a>
+            </div>
+        </div>
+
+        
+        <input type="hidden" th:field="*{id}" style="margin-top: 50px;" >   <!-- se tiver um id, ele da update, se não ele cria um novo  -->
+
+      </form>
+    </div>
+
+		
+	</body>
+</html>

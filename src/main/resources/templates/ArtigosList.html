@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Artigos List</title>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+
+        <style>
+
+            .padded-container
+            {
+                flex-grow: 1;
+                margin: 0 auto;
+                position: relative;
+                max-width: none !important;
+                padding-left: 128px;
+                padding-right: 128px;
+                width: 100%;
+            }
+
+            table 
+            {
+                table-layout: fixed !important;
+                margin-bottom: 60px;
+            }
+
+            tbody tr:nth-child(even)
+            {
+                background-color: whitesmoke;
+            }
+
+            td 
+            {
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+
+            .navbar-item:hover, .navbar-link:hover
+            {
+                background-color: darkslategrey !important;
+            }
+
+            /* estiliza o botão (<input/>) como um <a/> - pra mandar submit */
+            .button-link 
+            {
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+                color: white;
+                padding: 0;
+                font-family: inherit;
+                font-size: inherit;
+                width: 100%;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar is-black">
+
+            <div class="navbar-brand" >
+                <a href="/editora" class="navbar-item">Editora</a>
+            </div>
+
+            <div class="navbar-end">
+
+                <div class="navbar-item has-dropdown is-hoverable" style="padding-right: 10px;">
+
+                    <a class="navbar-link">
+                        <span th:text="${#authentication.principal.email}" ></span>
+                    </a>
+                
+                    <div class="navbar-dropdown" style="background-color: black; border-top: 0px;">                 
+                        
+                        <form method="post" th:action="@{/logout}">
+                            <input type="submit" class="navbar-item button-link" value="Logout" />
+                        </form>
+                        
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+        
+        <div class="padded-container">
+            
+            
+            <h2 class="title">Lista de Artigos</h2>
+            <hr/>
+
+            <a th:href="@{/artigos/create}" class="button is-primary" style="margin-bottom: 10px;">Novo Artigo</a>
+            <a th:href="@{/artigos/deleteAll}" class="button is-danger" style="margin-bottom: 10px;">Excluir Todos os Artigos</a>
+            
+            <table class="table is-bordered is-fullwidth is-stripped">
+
+                <thead>
+
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Resumo</th>
+                        <th>Publicado</th>
+
+                       <th>Opções</th> 
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr th:each="artigo: ${artigosList}" >
+                        <td th:text="${artigo.titulo}"></td>
+                        <td th:text="${artigo.resumo}"></td>
+                        <td th:text="${artigo.publicado}? 'Sim' : 'Não' "></td>
+                        
+                        <td style="white-space: nowrap; vertical-align: middle;">
+                            <div style="display: flex; justify-content: center;">
+
+                                <a th:href="@{/artigos/update/(id=${artigo.id})}" class="button is-primary">Atualizar</a>
+                                <a style="margin-left: 10px;" th:href="@{/artigos/deletarArtigo/(id=${artigo.id})}" class="button is-danger">Excluir</a>
+
+                            </div>
+                        </td>
+                    
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </body>
+
+</html>

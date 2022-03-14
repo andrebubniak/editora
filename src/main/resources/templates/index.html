@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Editora App</title>
+        
+        <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+
+
+        <style>
+            /* estiliza o botão (<input/>) como um <a/> - pra mandar submit */
+            .button-link 
+            {
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+                color: white;
+                padding: 0;
+                font-family: inherit;
+                font-size: inherit;
+                width: 100%;
+            }
+
+            .navbar-item:hover, .navbar-link:hover
+            {
+                background-color: darkslategrey !important;
+            }
+        </style>
+        
+    </head>
+<body>
+
+    <nav sec:authorize="isAuthenticated()" class="navbar is-black">
+
+        <div class="navbar-brand" >
+            <a class="navbar-item" >Editora</a>
+        </div>
+
+        <div class="navbar-end">
+
+            <div class="navbar-item has-dropdown is-hoverable" style="padding-right: 10px;">
+
+                <a class="navbar-link">
+                    <span th:text="${#authentication.principal.email}" ></span>
+                </a>
+            
+                <div class="navbar-dropdown" style="background-color: black; border-top: 0px;">
+                    
+                    <form method="post" th:action="@{/logout}">
+                        <input type="submit" class="navbar-item button-link" value="Logout" />
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container has-text-centered">
+        <div>
+            <h1 class="title">Aplicativo Editora</h1>
+            <div sec:authorize="isAuthenticated()">
+                <a class="button is-primary"
+                    th:href="@{/artigos}" >Artigos</a>
+            </div>
+            
+            <div sec:authorize="isAnonymous()">
+                <div class="box">
+                    <a class="button is-primary"
+                        th:href="@{/oauth2/authorization/cognito}" >Editora</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+        
