@@ -23,10 +23,11 @@ public class ArtigoController
 
     // pega todos os artigos do banco e coloca na tabela em /artigos
     @GetMapping("/artigos")
-    public ModelAndView getAllArtigos(@RequestParam(required = false) String titulo)
+    public ModelAndView getAllArtigos()
     {
         ModelAndView mav = new ModelAndView("ArtigosList");
         List<Artigo> la = artigoRep.findAll();
+        la.sort( (Artigo a1, Artigo a2) ->  a1.getTitulo().compareTo(a2.getTitulo()) ); //ordena por titulo
         mav.addObject("artigosList", la);
         return mav;
     }
